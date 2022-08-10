@@ -1,0 +1,10 @@
+name: TabListTweaks
+version: '${project.version}'
+main: me.kruase.tablisttweaks.TabListTweaks
+api-version: 1.13
+authors: [ KruASe ]
+
+description: Colors the player's name depending on the dimension they are in and indicates whether they are idle
+
+libraries:
+  - org.jetbrains.kotlin:kotlin-stdlib:1.7.10
