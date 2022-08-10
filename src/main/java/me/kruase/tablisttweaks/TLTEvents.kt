@@ -11,10 +11,12 @@ import org.bukkit.entity.Player
 import org.bukkit.Material
 import org.bukkit.World.Environment
 import org.bukkit.ChatColor
+import java.util.*
 
 
 val idleSuffix: String = " ${ChatColor.GOLD}⌚"
 val idleTimeout: Long = TabListTweaks.instance.config.getLong("idle-indicator-timeout-seconds") * 20
+val idlePlayerThreadIds: MutableMap<UUID, Int> = mutableMapOf()
 
 class TLTEvents : Listener {
     @EventHandler
@@ -61,16 +63,16 @@ fun updatePlayerDimension(player: Player, environment: Environment) {
 
 
 fun startPlayerIdleTracking(player: Player) {
-    TabListTweaks.idlePlayerThreadIds[player.uniqueId] = trackPlayerIdle(player)
+    idlePlayerThreadIds[player.uniqueId] = trackPlayerIdle(player)
 }
 
 fun stopPlayerIdleTracking(player: Player) {
-    TabListTweaks.instance.server.scheduler.cancelTask(TabListTweaks.idlePlayerThreadIds[player.uniqueId]!!)
-    TabListTweaks.idlePlayerThreadIds.remove(player.uniqueId)
+    TabListTweaks.instance.server.scheduler.cancelTask(idlePlayerThreadIds[player.uniqueId]!!)
+    idlePlayerThreadIds.remove(player.uniqueId)
 }
 
 fun refreshPlayerIdleTracking(player: Player) {
-    TabListTweaks.instance.server.scheduler.cancelTask(TabListTweaks.idlePlayerThreadIds[player.uniqueId]!!)
+    TabListTweaks.instance.server.scheduler.cancelTask(idlePlayerThreadIds[player.uniqueId]!!)
     player.setPlayerListName(player.playerListName.replace(idleSuffix, ""))
     startPlayerIdleTracking(player)
 }
