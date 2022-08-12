@@ -5,10 +5,10 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.player.PlayerJoinEvent
 import org.bukkit.event.player.PlayerQuitEvent
 import org.bukkit.event.player.PlayerMoveEvent
+import org.bukkit.event.player.PlayerRespawnEvent
 import org.bukkit.event.player.PlayerTeleportEvent
-import org.bukkit.event.entity.EntityPortalEnterEvent
 import org.bukkit.entity.Player
-import org.bukkit.Material
+import org.bukkit.Location
 import org.bukkit.World.Environment
 import org.bukkit.ChatColor
 import java.util.*
@@ -21,7 +21,7 @@ val idlePlayerThreadIds: MutableMap<UUID, Int> = mutableMapOf()
 class TLTEvents : Listener {
     @EventHandler
     fun onPlayerJoin(event: PlayerJoinEvent) {
-        updatePlayerDimension(event.player, event.player.location.world!!.environment)
+        updatePlayerDimension(event.player)
         startPlayerIdleTracking(event.player)
     }
 
@@ -37,22 +37,19 @@ class TLTEvents : Listener {
 
     @EventHandler
     fun onPlayerTeleport(event: PlayerTeleportEvent) {
-        updatePlayerDimension(event.player, event.to!!.world!!.environment)
+        updatePlayerDimension(event.player, event.to!!)
     }
 
     @EventHandler
-    fun onPlayerExitEndPortalEnter(event: EntityPortalEnterEvent) {  // End exit portal fix
-        if (event.entity !is Player ||
-            event.location.block.type != Material.END_PORTAL ||
-            event.location.world!!.environment != Environment.THE_END) return
-        updatePlayerDimension(event.entity as Player, Environment.NORMAL)
+    fun onPlayerRespawn(event: PlayerRespawnEvent) {
+        updatePlayerDimension(event.player, event.respawnLocation)
     }
 }
 
 
-fun updatePlayerDimension(player: Player, environment: Environment) {
+fun updatePlayerDimension(player: Player, location: Location = player.location) {
     player.setPlayerListName(
-        when (environment) {
+        when (location.world!!.environment) {
             Environment.NORMAL -> "${ChatColor.GREEN}${player.name}"
             Environment.NETHER -> "${ChatColor.RED}${player.name}"
             Environment.THE_END -> "${ChatColor.LIGHT_PURPLE}${player.name}"
