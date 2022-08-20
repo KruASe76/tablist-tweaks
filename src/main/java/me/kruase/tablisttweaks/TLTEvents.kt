@@ -1,5 +1,6 @@
 package me.kruase.tablisttweaks
 
+import java.util.*
 import org.bukkit.event.Listener
 import org.bukkit.event.EventHandler
 import org.bukkit.event.player.PlayerJoinEvent
@@ -11,7 +12,7 @@ import org.bukkit.entity.Player
 import org.bukkit.Location
 import org.bukkit.World.Environment
 import org.bukkit.ChatColor
-import java.util.*
+import me.kruase.tablisttweaks.util.getColoredPlayerName
 
 
 val idleSuffix: String = " ${ChatColor.GOLD}⌚"
@@ -49,12 +50,14 @@ class TLTEvents : Listener {
 
 fun updatePlayerDimension(player: Player, location: Location = player.location) {
     player.setPlayerListName(
-        when (location.world!!.environment) {
-            Environment.NORMAL -> "${ChatColor.GREEN}${player.name}"
-            Environment.NETHER -> "${ChatColor.RED}${player.name}"
-            Environment.THE_END -> "${ChatColor.LIGHT_PURPLE}${player.name}"
-            Environment.CUSTOM -> player.name
-        }
+        getColoredPlayerName(
+            player.playerListName,
+            when (location.world!!.environment) {
+                Environment.NORMAL -> ChatColor.GREEN
+                Environment.NETHER -> ChatColor.RED
+                Environment.THE_END -> ChatColor.LIGHT_PURPLE
+            }
+        )
     )
 }
 
