@@ -10,7 +10,6 @@ import org.bukkit.event.player.PlayerRespawnEvent
 import org.bukkit.event.player.PlayerTeleportEvent
 import org.bukkit.entity.Player
 import org.bukkit.Location
-import org.bukkit.World.Environment
 import org.bukkit.ChatColor
 import me.kruase.tablisttweaks.util.getColoredPlayerName
 
@@ -52,10 +51,16 @@ fun updatePlayerDimension(player: Player, location: Location = player.location) 
     player.setPlayerListName(
         getColoredPlayerName(
             player.playerListName,
-            when (location.world!!.environment) {
-                Environment.NORMAL -> ChatColor.GREEN
-                Environment.NETHER -> ChatColor.RED
-                Environment.THE_END -> ChatColor.LIGHT_PURPLE
+            when (location.world!!.name) {
+                "New World" -> ChatColor.GREEN
+                "DIM-1" -> ChatColor.RED
+                "DIM1" -> ChatColor.LIGHT_PURPLE
+                "ultra_amplified_dimension" ->
+                    ChatColor.DARK_AQUA
+                "twilightforest" -> ChatColor.DARK_GREEN
+                "reality_marble" -> ChatColor.GOLD
+                "dungeon_dimension" -> ChatColor.YELLOW
+                else -> ChatColor.WHITE
             }
         )
     )
