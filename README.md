@@ -1,5 +1,9 @@
 # tablist-tweaks
 
+[Modrinth](https://modrinth.com/plugin/tablist-tweaks) ·
+[CurseForge](https://www.curseforge.com/minecraft/bukkit-plugins/tablist-tweaks) ·
+[SpigotMC](https://www.spigotmc.org/resources/tablist-tweaks.109018)
+
 A Spigot (Bukkit) Minecraft plugin that adds some visual tweaks to the tablist
 
 
