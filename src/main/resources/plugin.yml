@@ -1,6 +1,6 @@
 name: TabListTweaks
 version: '${project.version}'
-main: me.kruase.tablisttweaks.TabListTweaks
+main: me.kruase.tablisttweaks.TablistTweaks
 api-version: 1.16
 authors: [ KruASe ]
 

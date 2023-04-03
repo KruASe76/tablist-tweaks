@@ -16,10 +16,10 @@ import me.kruase.tablisttweaks.util.getColoredPlayerName
 
 
 val idleSuffix: String = " ${ChatColor.GOLD}⌚"
-val idleTimeout: Long = TabListTweaks.instance.config.getLong("idle-indicator-timeout-seconds") * 20
+val idleTimeout: Long = TablistTweaks.instance.config.getLong("idle-indicator-timeout-seconds") * 20
 val idlePlayerThreadIds: MutableMap<UUID, Int> = mutableMapOf()
 
-class TLTEvents : Listener {
+class TTEvents : Listener {
     @EventHandler
     fun onPlayerJoin(event: PlayerJoinEvent) {
         updatePlayerDimension(event.player)
@@ -67,19 +67,19 @@ fun startPlayerIdleTracking(player: Player) {
 }
 
 fun stopPlayerIdleTracking(player: Player) {
-    TabListTweaks.instance.server.scheduler.cancelTask(idlePlayerThreadIds[player.uniqueId]!!)
+    TablistTweaks.instance.server.scheduler.cancelTask(idlePlayerThreadIds[player.uniqueId]!!)
     idlePlayerThreadIds.remove(player.uniqueId)
 }
 
 fun refreshPlayerIdleTracking(player: Player) {
-    TabListTweaks.instance.server.scheduler.cancelTask(idlePlayerThreadIds[player.uniqueId]!!)
+    TablistTweaks.instance.server.scheduler.cancelTask(idlePlayerThreadIds[player.uniqueId]!!)
     player.setPlayerListName(player.playerListName.replace(idleSuffix, ""))
     startPlayerIdleTracking(player)
 }
 
 fun trackPlayerIdle(player: Player): Int {
-    return TabListTweaks.instance.server.scheduler.scheduleSyncDelayedTask(
-        TabListTweaks.instance, {
+    return TablistTweaks.instance.server.scheduler.scheduleSyncDelayedTask(
+        TablistTweaks.instance, {
             player.setPlayerListName(player.playerListName + idleSuffix)
         }, idleTimeout
     )

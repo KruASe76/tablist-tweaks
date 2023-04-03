@@ -3,9 +3,9 @@ package me.kruase.tablisttweaks
 import org.bukkit.plugin.java.JavaPlugin
 
 
-class TabListTweaks : JavaPlugin() {
+class TablistTweaks : JavaPlugin() {
     companion object {
-        lateinit var instance: TabListTweaks
+        lateinit var instance: TablistTweaks
     }
 
     override fun onEnable() {
@@ -13,6 +13,6 @@ class TabListTweaks : JavaPlugin() {
 
         saveDefaultConfig()
 
-        server.pluginManager.registerEvents(TLTEvents(), instance)
+        server.pluginManager.registerEvents(TTEvents(), instance)
     }
 }
