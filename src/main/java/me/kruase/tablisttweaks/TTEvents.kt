@@ -15,35 +15,38 @@ import org.bukkit.ChatColor
 import me.kruase.tablisttweaks.util.getColoredPlayerName
 
 
-val idleSuffix: String = " ${ChatColor.GOLD}⌚"
-val idleTimeout: Long = TablistTweaks.instance.config.getLong("idle-indicator-timeout-seconds") * 20
-val idlePlayerThreadIds: MutableMap<UUID, Int> = mutableMapOf()
+val idleSuffix = " ${ChatColor.GOLD}⌚"
+val idlePlayerThreadIds = mutableMapOf<UUID, Int>()
+val doDimensionColors = TablistTweaks.instance.config.getBoolean("features.dimension-colors", true)
+val doIdleTracking = TablistTweaks.instance.config.getBoolean("features.idle-indicator", true)
+val idleTimeout = TablistTweaks.instance.config.getLong("idle-indicator-timeout-seconds", 600L) * 20
+
 
 class TTEvents : Listener {
     @EventHandler
     fun onPlayerJoin(event: PlayerJoinEvent) {
-        updatePlayerDimension(event.player)
-        startPlayerIdleTracking(event.player)
+        if (doDimensionColors) updatePlayerDimension(event.player)
+        if (doIdleTracking) startPlayerIdleTracking(event.player)
     }
 
     @EventHandler
     fun onPlayerLeave(event: PlayerQuitEvent) {
-        stopPlayerIdleTracking(event.player)
+        if (doIdleTracking) stopPlayerIdleTracking(event.player)
     }
 
     @EventHandler
     fun onPlayerMove(event: PlayerMoveEvent) {
-        refreshPlayerIdleTracking(event.player)
+        if (doIdleTracking) refreshPlayerIdleTracking(event.player)
     }
 
     @EventHandler
     fun onPlayerTeleport(event: PlayerTeleportEvent) {
-        updatePlayerDimension(event.player, event.to!!)
+        if (doDimensionColors) updatePlayerDimension(event.player, event.to!!)
     }
 
     @EventHandler
     fun onPlayerRespawn(event: PlayerRespawnEvent) {
-        updatePlayerDimension(event.player, event.respawnLocation)
+        if (doDimensionColors) updatePlayerDimension(event.player, event.respawnLocation)
     }
 }
 

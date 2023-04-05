@@ -1,1 +1,4 @@
 idle-indicator-timeout-seconds: 600
+features: # Change the value to "false" to turn off
+    dimension-colors: true
+    idle-indicator: true

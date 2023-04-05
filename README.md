@@ -19,6 +19,9 @@ A Spigot (Bukkit) Minecraft plugin that adds some visual tweaks to the tablist
 ## Configuration
 
 - The time player has to stand still to get the "idle" symbol (in seconds)
+- Enable/disable features
+  - Dimension colors
+  - Idle indicator
 
 
 ## Reference
