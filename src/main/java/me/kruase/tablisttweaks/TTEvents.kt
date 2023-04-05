@@ -1,6 +1,6 @@
 package me.kruase.tablisttweaks
 
-import java.util.*
+import java.util.UUID
 import org.bukkit.event.Listener
 import org.bukkit.event.EventHandler
 import org.bukkit.event.player.PlayerJoinEvent
@@ -15,7 +15,7 @@ import org.bukkit.ChatColor
 import me.kruase.tablisttweaks.util.getColoredPlayerName
 
 
-val idleSuffix = " ${ChatColor.GOLD}⌚"
+val idleSuffix = " ${ChatColor.GOLD}⌚${ChatColor.RESET}"
 val idlePlayerThreadIds = mutableMapOf<UUID, Int>()
 val doDimensionColors = TablistTweaks.instance.config.getBoolean("features.dimension-colors", true)
 val doIdleTracking = TablistTweaks.instance.config.getBoolean("features.idle-indicator", true)
