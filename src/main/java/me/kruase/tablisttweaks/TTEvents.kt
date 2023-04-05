@@ -25,7 +25,7 @@ val idleTimeout = TablistTweaks.instance.config.getLong("idle-indicator-timeout-
 class TTEvents : Listener {
     @EventHandler
     fun onPlayerJoin(event: PlayerJoinEvent) {
-        if (doDimensionColors) updatePlayerDimension(event.player)
+        if (doDimensionColors) updatePlayerDimension(event.player, initial = true)
         if (doIdleTracking) startPlayerIdleTracking(event.player)
     }
 
@@ -41,26 +41,31 @@ class TTEvents : Listener {
 
     @EventHandler
     fun onPlayerTeleport(event: PlayerTeleportEvent) {
-        if (doDimensionColors) updatePlayerDimension(event.player, event.to!!)
+        if (doDimensionColors) updatePlayerDimension(event.player, location = event.to!!)
     }
 
     @EventHandler
     fun onPlayerRespawn(event: PlayerRespawnEvent) {
-        if (doDimensionColors) updatePlayerDimension(event.player, event.respawnLocation)
+        if (doDimensionColors) updatePlayerDimension(event.player, location = event.respawnLocation)
     }
 }
 
 
-fun updatePlayerDimension(player: Player, location: Location = player.location) {
-    player.setPlayerListName(
-        getColoredPlayerName(
-            player.playerListName,
-            when (location.world!!.environment) {
-                Environment.NORMAL -> ChatColor.GREEN
-                Environment.NETHER -> ChatColor.RED
-                Environment.THE_END -> ChatColor.LIGHT_PURPLE
-            }
-        )
+fun updatePlayerDimension(player: Player, location: Location = player.location, initial: Boolean = false) {
+    TablistTweaks.instance.server.scheduler.scheduleSyncDelayedTask(
+        TablistTweaks.instance, {
+            player.setPlayerListName(
+                getColoredPlayerName(
+                    player.playerListName,
+                    when (location.world!!.environment) {
+                        Environment.NORMAL -> ChatColor.GREEN
+                        Environment.NETHER -> ChatColor.RED
+                        Environment.THE_END -> ChatColor.LIGHT_PURPLE
+                    },
+                    initial
+                )
+            )
+        }, 1L
     )
 }
 
