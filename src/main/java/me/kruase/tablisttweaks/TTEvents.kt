@@ -80,10 +80,14 @@ fun stopPlayerIdleTracking(player: Player) {
 }
 
 fun refreshPlayerIdleTracking(player: Player) {
-    TablistTweaks.instance.server.scheduler.cancelTask(idlePlayerThreadIds[player.uniqueId]!!)
-    player.setPlayerListName(player.playerListName.replace(idleSuffix, ""))
-    startPlayerIdleTracking(player)
+    val playerListName = player.playerListName
+    if (playerListName.endsWith(idleSuffix)) {
+        player.setPlayerListName(playerListName.substring(0, playerListName.length - idleSuffix.length))
+        updatePlayerDimension(player)
+        startPlayerIdleTracking(player)
+    }
 }
+
 
 fun trackPlayerIdle(player: Player): Int {
     return TablistTweaks.instance.server.scheduler.scheduleSyncDelayedTask(

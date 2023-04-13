@@ -3,5 +3,5 @@ version: '${project.version}'
 main: me.kruase.tablisttweaks.TablistTweaks
 api-version: 1.16
 authors: [ KruASe ]
-
 description: Colors the player's name depending on the dimension they are in and indicates whether they are idle
+folia-supported: true
