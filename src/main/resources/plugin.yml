@@ -4,4 +4,31 @@ main: me.kruase.tablisttweaks.TablistTweaks
 api-version: 1.16
 authors: [ KruASe ]
 
+folia-supported: true
+
 description: Colors the player's name depending on the dimension they are in and indicates whether they are idle
+
+commands:
+    tablisttweaks:
+        description: Main TablistTweaks plugin command
+        permission: tablisttweaks.help
+        usage: |-
+            §7Run §6/help <command> [n] §7to get page n of help
+            §a/<command> §6help §a[command] §r- Show help for given command, for available commands otherwise
+            §a/<command> §6reload §r- Reload config
+            §cWARNING: §eCommands listed here might be unavailable for you, to get help for available commands run §a/<command> help
+        aliases:
+            - tt
+
+permissions:
+    tablisttweaks.help:
+        description: Allows to use §a/tt §6help §r(lists only available commands)
+        default: true
+    tablisttweaks.reload:
+        description: Allows to use §a/tt §6reload
+        default: op
+    tablisttweaks.admin:
+        description: Refers to §tablisttweaks.reload §rby default
+        default: op
+        children:
+            tablisttweaks.reload: true

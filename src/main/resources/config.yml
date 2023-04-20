@@ -1,4 +1,12 @@
-idle-indicator-timeout-seconds: 600
+idle-badge-timeout-seconds: 300
 features: # Change the value to "false" to turn off
     dimension-colors: true
-    idle-indicator: true
+    idle-badge: true
+messages: # Can be used to add translation
+    error:
+        no-permission: Not enough permissions to call this command!
+        invalid-command: Invalid command!
+    help: # Not intended to be edited
+        header: §7-------- §6[§aTablistTweaks§6] §7---------------------
+        help: §a/tt §6help §a[command] §r- Show help for given command, for available commands otherwise
+        reload: §a/tt §6reload §r- Reload config
