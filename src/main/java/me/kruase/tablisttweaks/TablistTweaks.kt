@@ -1,6 +1,7 @@
 package me.kruase.tablisttweaks
 
 import org.bukkit.plugin.java.JavaPlugin
+import me.kruase.tablisttweaks.commands.reload
 
 
 class TablistTweaks : JavaPlugin() {
@@ -11,12 +12,11 @@ class TablistTweaks : JavaPlugin() {
 
     override fun onEnable() {
         instance = this
-        userConfig = getUserConfig()
+
+        reload(server.consoleSender, emptyArray())
 
         getCommand("tablisttweaks")!!.setExecutor(TTCommands())
 
         server.pluginManager.registerEvents(TTEvents(), instance)
-
-        server.dispatchCommand(server.consoleSender, "tt reload")
     }
 }
