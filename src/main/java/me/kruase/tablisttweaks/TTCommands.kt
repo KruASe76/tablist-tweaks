@@ -35,10 +35,7 @@ class TTCommands : TabExecutor {
             when (args.getOrNull(0)) {
                 null -> help(sender, arrayOf())
                 "help" -> help(sender, args.drop(1).toTypedArray())
-                "reload" -> {
-                    if (!sender.hasPermission("tablisttweaks.reload")) throw UnsupportedOperationException()
-                    TablistTweaks.userConfig = TablistTweaks.instance.getUserConfig()
-                }
+                "reload" -> reload(sender, args.drop(1).toTypedArray())
             }
         } catch (e: UnsupportedOperationException) {
             sender.sendMessage(

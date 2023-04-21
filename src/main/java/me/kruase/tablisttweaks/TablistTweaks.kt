@@ -16,5 +16,7 @@ class TablistTweaks : JavaPlugin() {
         getCommand("tablisttweaks")!!.setExecutor(TTCommands())
 
         server.pluginManager.registerEvents(TTEvents(), instance)
+
+        server.dispatchCommand(server.consoleSender, "tt reload")
     }
 }
