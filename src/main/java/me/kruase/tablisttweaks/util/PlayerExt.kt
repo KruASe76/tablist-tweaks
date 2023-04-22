@@ -1,17 +1,15 @@
 package me.kruase.tablisttweaks.util
 
-import java.util.UUID
 import org.bukkit.entity.Player
 import org.bukkit.ChatColor
 import org.bukkit.Location
 import org.bukkit.World
 import me.kruase.tablisttweaks.TablistTweaks.Companion.instance
 import me.kruase.tablisttweaks.TablistTweaks.Companion.userConfig
+import me.kruase.tablisttweaks.TablistTweaks.Companion.idlePlayerThreadIds
 
 
 val idleBadge = " ${ChatColor.GOLD}⌚${ChatColor.RESET}"
-
-val idlePlayerThreadIds = mutableMapOf<UUID, Int>()
 
 
 var Player.idleTreadId: Int

@@ -4,10 +4,12 @@
 [CurseForge](https://www.curseforge.com/minecraft/bukkit-plugins/tablist-tweaks) ·
 [SpigotMC](https://www.spigotmc.org/resources/tablist-tweaks.109018)
 
-A Spigot (Bukkit) Minecraft plugin that adds some visual tweaks to the tablist
+A Spigot (Bukkit) Minecraft that improves the player list (shown on Tab button press)
+
+![](https://cdn.discordapp.com/attachments/797224818763104317/1088857650512535562/tablist_tweaks_showcase.png)
 
 
-## Features
+## Features (can be disabled through configuration)
 
 - The color of the player's name is associated with the dimension in which they are located:
   - ![](https://via.placeholder.com/15/55ff55/55ff55.png) Green for Overworld
@@ -46,6 +48,11 @@ A Spigot (Bukkit) Minecraft plugin that adds some visual tweaks to the tablist
 | `tablisttweaks.help`   | true    | Allows to use `/tt help` (lists only available commands)  |
 | `tablisttweaks.reload` | op      | Allows to use `/tt reload`                                |
 | `tablisttweaks.admin`  | op      | Refers to `tablisttweaks.reload` by default               |
+
+
+## Supported versions
+Plugin works properly on **1.16** and above. May work on older versions, probably without problems down to **1.13**.  
+Requires **Java 1.8** or higher.
 
 
 ## Reference
