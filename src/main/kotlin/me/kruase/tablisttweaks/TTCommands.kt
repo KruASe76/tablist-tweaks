@@ -43,7 +43,9 @@ class TTCommands : TabExecutor {
             )
         } catch (e: IllegalArgumentException) {
             sender.sendMessage(
-                "${ChatColor.RED}${TablistTweaks.userConfig.messages.error["invalid-command"] ?: "Error: invalid-command"}"
+                "${ChatColor.RED}${
+                    TablistTweaks.userConfig.messages.error["invalid-command"] ?: "Error: invalid-command"
+                }"
             )
         } catch (e: IllegalStateException) {
             // "Unknown error" should never happen
