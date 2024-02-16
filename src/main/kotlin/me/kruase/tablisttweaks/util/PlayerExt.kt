@@ -24,7 +24,10 @@ fun Player.deleteIdleTreadId() {
 
 
 fun Player.coloredName(color: ChatColor, initial: Boolean): String {
-    return "$color${if (initial) playerListName else playerListName.drop(2).dropLast(2)}${ChatColor.RESET}"
+    return "$color${if (initial) playerListName else playerListName.drop(2)}" +
+            (if (playerListName.endsWith(ChatColor.RESET.toString())) "" else ChatColor.RESET)
+    // dropping only first color code and then adding ChatColor.RESET only if not already present
+    // (it seems like Paper automatically removes ChatColor.RESET at the end of the playerListName)
 }
 
 fun Player.updateDimension(destinationLocation: Location = location, initial: Boolean = false) {

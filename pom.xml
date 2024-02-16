@@ -6,7 +6,7 @@
 
     <groupId>me.kruase</groupId>
     <artifactId>tablist-tweaks</artifactId>
-    <version>1.3.3</version>
+    <version>1.3.4</version>
     <packaging>jar</packaging>
 
     <name>TablistTweaks</name>
@@ -14,7 +14,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
-        <kotlin.version>1.9.10</kotlin.version>
+        <kotlin.version>1.9.22</kotlin.version>
         <mcApi.version>1.16</mcApi.version>
     </properties>
 
@@ -24,7 +24,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>3.5.0</version>
+                <version>3.5.1</version>
                 <executions>
                     <execution>
                         <phase>package</phase>
