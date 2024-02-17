@@ -29,7 +29,10 @@ fun reload(sender: CommandSender, args: Array<out String>) {
     }
 
     if (userConfig.enabledFeatures.idleTracking) {
-        instance.server.onlinePlayers.forEach { it.startIdleTracking() }
+        instance.server.onlinePlayers.forEach {
+            it.stopIdleTracking()
+            it.startIdleTracking()
+        }
     } else  {
         instance.server.onlinePlayers.forEach {
             it.stopIdleTracking()

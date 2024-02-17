@@ -24,8 +24,9 @@ fun Player.deleteIdleTreadId() {
 
 
 fun Player.coloredName(color: ChatColor, initial: Boolean): String {
-    return "$color${if (initial) playerListName else playerListName.drop(2)}" +
-            (if (playerListName.endsWith(ChatColor.RESET.toString())) "" else ChatColor.RESET)
+    return "$color${
+        if (initial) playerListName else playerListName.drop(2).removeSuffix(ChatColor.RESET.toString())
+    }${ChatColor.RESET}"
     // dropping only first color code and then adding ChatColor.RESET only if not already present
     // (it seems like Paper automatically removes ChatColor.RESET at the end of the playerListName)
 }
@@ -51,7 +52,11 @@ fun Player.updateDimension(destinationLocation: Location = location, initial: Bo
 
 
 fun Player.startIdleTracking() {
-    idleTreadId = trackIdle()
+    idleTreadId = instance.server.scheduler.scheduleSyncDelayedTask(
+        instance,
+        { setPlayerListName(playerListName + idleBadge) },
+        userConfig.idleTimeout
+    )
 }
 
 fun Player.stopIdleTracking() {
@@ -61,14 +66,10 @@ fun Player.stopIdleTracking() {
 
 fun Player.refreshIdleTracking() {
     instance.server.scheduler.cancelTask(idleTreadId)
-    setPlayerListName(playerListName.replace(idleBadge, ""))
-    startIdleTracking()
-}
-
-fun Player.trackIdle(): Int {
-    return instance.server.scheduler.scheduleSyncDelayedTask(
-        instance,
-        { setPlayerListName(playerListName + idleBadge) },
-        userConfig.idleTimeout
+    setPlayerListName(
+        playerListName
+            .removeSuffix(idleBadge)
+            .removeSuffix(idleBadge.removeSuffix(ChatColor.RESET.toString()))  // for Paper again
     )
+    startIdleTracking()
 }
