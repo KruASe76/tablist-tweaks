@@ -1,5 +1,8 @@
 # tablist-tweaks
 
+![](https://img.shields.io/badge/MINECRAFT-1.16+-966C4A?style=for-the-badge&labelColor=53AC56)
+![](https://img.shields.io/badge/JAVA-1.8+-5283A2?style=for-the-badge&labelColor=E86F00)
+
 [Modrinth](https://modrinth.com/plugin/tablist-tweaks) ·
 [CurseForge](https://www.curseforge.com/minecraft/bukkit-plugins/tablist-tweaks) ·
 [SpigotMC](https://www.spigotmc.org/resources/tablist-tweaks.109018)
