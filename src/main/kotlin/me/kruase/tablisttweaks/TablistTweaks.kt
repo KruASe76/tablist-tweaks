@@ -10,7 +10,11 @@ class TablistTweaks : JavaPlugin() {
         lateinit var instance: TablistTweaks
         lateinit var userConfig: TTConfig
 
-        val idlePlayerThreadIds = mutableMapOf<UUID, Int>()
+        val idlePlayerTaskIds = mutableMapOf<UUID, Int>()
+    }
+
+    fun warnNotNull(message: String?) {
+        message?.let { logger.warning(it) }
     }
 
     override fun onEnable() {

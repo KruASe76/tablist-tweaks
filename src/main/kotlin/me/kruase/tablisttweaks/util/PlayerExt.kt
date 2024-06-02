@@ -6,20 +6,20 @@ import org.bukkit.Location
 import org.bukkit.World
 import me.kruase.tablisttweaks.TablistTweaks.Companion.instance
 import me.kruase.tablisttweaks.TablistTweaks.Companion.userConfig
-import me.kruase.tablisttweaks.TablistTweaks.Companion.idlePlayerThreadIds
+import me.kruase.tablisttweaks.TablistTweaks.Companion.idlePlayerTaskIds
 
 
 val idleBadge = " ${ChatColor.GOLD}⌚${ChatColor.RESET}"
 
 
-var Player.idleTreadId: Int
-    get() = idlePlayerThreadIds[uniqueId]!!
+var Player.idleTaskId: Int?
+    get() = idlePlayerTaskIds[uniqueId]
     set(value) {
-        idlePlayerThreadIds[uniqueId] = value
+        idlePlayerTaskIds[uniqueId] = value!!
     }
 
-fun Player.deleteIdleTreadId() {
-    idlePlayerThreadIds.remove(uniqueId)
+fun Player.deleteIdleTaskId() {
+    idlePlayerTaskIds.remove(uniqueId)
 }
 
 
@@ -52,7 +52,7 @@ fun Player.updateDimension(destinationLocation: Location = location, initial: Bo
 
 
 fun Player.startIdleTracking() {
-    idleTreadId = instance.server.scheduler.scheduleSyncDelayedTask(
+    idleTaskId = instance.server.scheduler.scheduleSyncDelayedTask(
         instance,
         { setPlayerListName(playerListName + idleBadge) },
         userConfig.idleTimeout
@@ -60,16 +60,27 @@ fun Player.startIdleTracking() {
 }
 
 fun Player.stopIdleTracking() {
-    instance.server.scheduler.cancelTask(idleTreadId)
-    deleteIdleTreadId()
+    tryCancelIdleTask()
+    deleteIdleTaskId()
 }
 
 fun Player.refreshIdleTracking() {
-    instance.server.scheduler.cancelTask(idleTreadId)
+    tryCancelIdleTask()
+
     setPlayerListName(
         playerListName
             .removeSuffix(idleBadge)
             .removeSuffix(idleBadge.removeSuffix(ChatColor.RESET.toString()))  // for Paper again
     )
+
     startIdleTracking()
+}
+
+fun Player.tryCancelIdleTask() {
+    idleTaskId
+        ?.let { instance.server.scheduler.cancelTask(it) }
+        ?: instance.warnNotNull(
+            userConfig.messages.warning["improper-tracking"]
+                ?.replace("{player}", name)
+        )
 }

@@ -63,4 +63,6 @@ data class MessagesConfig(private val config: FileConfiguration) {
         .getKeys(false).associateWith { config.getString("messages.help.$it")!! }
     val error: Map<String, String> = config.getConfigurationSection("messages.error")!!
         .getKeys(false).associateWith { config.getString("messages.error.$it")!! }
+    val warning: Map<String, String> = config.getConfigurationSection("messages.warning")!!
+        .getKeys(false).associateWith { config.getString("messages.warning.$it")!! }
 }

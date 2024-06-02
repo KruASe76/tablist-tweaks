@@ -10,3 +10,5 @@ messages: # Can be used to add translation
         header: §7-------- §6[§aTablistTweaks§6] §7---------------------
         help: §a/tt §6help §a[command] §r- Show help for given command, for available commands otherwise
         reload: §a/tt §6reload §r- Reload config
+    warning: # Shown only in console; to turn off certain messages leave the field empty (not empty quotes!)
+        improper-tracking: Player {player} was not idle-tracked properly before
