@@ -50,6 +50,7 @@ As for other similar plugins - most likely not.
   - error
   - help
   - warning
+  - info
 
 
 ## Permissions
