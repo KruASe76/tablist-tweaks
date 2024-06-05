@@ -9,7 +9,9 @@
 
 A Spigot (Bukkit) Minecraft that improves the player list (shown on Tab button press)
 
-![](https://cdn.discordapp.com/attachments/797224818763104317/1088857650512535562/tablist_tweaks_showcase.png)
+
+
+![](https://cdn.modrinth.com/data/MDSeFHTz/images/d9c0e5e978036931665b3d4dcb894899764e4465.png)
 
 
 ## Features (can be disabled through configuration)
@@ -19,6 +21,11 @@ A Spigot (Bukkit) Minecraft that improves the player list (shown on Tab button p
   - ![](https://via.placeholder.com/15/ff5555/ff5555.png) Red for Nether
   - ![](https://via.placeholder.com/15/ff55ff/ff55ff.png) Purple for The End
 - The "idle" badge is placed after the player's name if they haven't moved for some time
+
+
+## Compatibility
+**Tablist tweaks is compatible with [TAB](https://modrinth.com/plugin/tab-was-taken)!**  
+As for other similar plugins - most likely not.
 
 
 ## Usage
@@ -42,6 +49,7 @@ A Spigot (Bukkit) Minecraft that improves the player list (shown on Tab button p
 - Plugin messages
   - error
   - help
+  - warning
 
 
 ## Permissions
@@ -60,7 +68,7 @@ Requires **Java 1.8** or higher.
 
 ## Reference
 
-- [Mineshield server](https://shield.land/mineshield)'s tab as inspiration
+- [MineShield server](https://shield.land/mineshield)'s tab as inspiration
 
 
 ## Special thanks to:

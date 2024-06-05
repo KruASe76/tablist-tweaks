@@ -55,6 +55,7 @@ fun TablistTweaks.newDefaultConfig() {
 
 data class EnabledFeaturesConfig(private val config: FileConfiguration) {
     val dimensionColors = config.getBoolean("features.dimension-colors")
+    val dimensionColorsPreserveSuffix = config.getBoolean("features.dimension-colors-preserve-suffix")
     val idleTracking = config.getBoolean("features.idle-badge")
 }
 
@@ -63,6 +64,8 @@ data class MessagesConfig(private val config: FileConfiguration) {
         .getKeys(false).associateWith { config.getString("messages.help.$it")!! }
     val error: Map<String, String> = config.getConfigurationSection("messages.error")!!
         .getKeys(false).associateWith { config.getString("messages.error.$it")!! }
+    val info: Map<String, String> = config.getConfigurationSection("messages.info")!!
+        .getKeys(false).associateWith { config.getString("messages.info.$it")!! }
     val warning: Map<String, String> = config.getConfigurationSection("messages.warning")!!
         .getKeys(false).associateWith { config.getString("messages.warning.$it")!! }
 }

@@ -16,7 +16,7 @@ fun reload(sender: CommandSender, args: Array<out String>) {
     userConfig = instance.getUserConfig()
 
     if (userConfig.enabledFeatures.dimensionColors) {
-        instance.server.onlinePlayers.forEach { it.updateDimension(initial = true) }
+        instance.server.onlinePlayers.forEach { it.updateDimension(isInitial = true) }
     } else {
         instance.server.onlinePlayers.forEach {
             it.playerListName.run {
@@ -39,4 +39,9 @@ fun reload(sender: CommandSender, args: Array<out String>) {
             it.setPlayerListName(it.playerListName.replace(idleBadge, ""))
         }
     }
+}
+
+
+fun reload() {
+    reload(instance.server.consoleSender, emptyArray())
 }

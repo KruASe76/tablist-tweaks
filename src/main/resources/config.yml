@@ -1,14 +1,21 @@
 idle-badge-timeout-seconds: 300
-features: # Change the value to "false" to turn off
+
+features: # "true" - ON, "false" - OFF
     dimension-colors: true
     idle-badge: true
+
 messages: # Can be used to add translation
     error:
         no-permission: Not enough permissions to call this command!
         invalid-command: Invalid command!
+
     help: # Not intended to be edited
         header: §7-------- §6[§aTablistTweaks§6] §7---------------------
         help: §a/tt §6help §a[command] §r- Show help for given command, for available commands otherwise
         reload: §a/tt §6reload §r- Reload config
+
+    info: # Shown only in console; to turn off certain messages leave the field empty (not empty quotes!)
+        tab-found: TAB found! Using its API...
+
     warning: # Shown only in console; to turn off certain messages leave the field empty (not empty quotes!)
         improper-tracking: Player {player} was not idle-tracked properly before

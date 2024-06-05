@@ -1,10 +1,10 @@
 package me.kruase.tablisttweaks
 
-import org.bukkit.command.TabExecutor
-import org.bukkit.command.CommandSender
-import org.bukkit.command.Command
-import org.bukkit.ChatColor
 import me.kruase.tablisttweaks.commands.*
+import org.bukkit.ChatColor
+import org.bukkit.command.Command
+import org.bukkit.command.CommandSender
+import org.bukkit.command.TabExecutor
 
 
 class TTCommands : TabExecutor {

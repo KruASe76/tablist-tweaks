@@ -2,6 +2,8 @@ name: TablistTweaks
 version: '${project.version}'
 api-version: '${mcApi.version}'
 main: me.kruase.tablisttweaks.TablistTweaks
+softdepend:
+    - TAB
 authors: [ KruASe ]
 
 # folia-supported: true  # maybe sometime in the future...
