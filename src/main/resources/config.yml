@@ -2,6 +2,9 @@ idle-badge-timeout-seconds: 300
 
 features: # "true" - ON, "false" - OFF
     dimension-colors: true
+    # display player's dimension as a colored dot name suffix:
+    dimension-color-dots: false
+
     idle-badge: true
 
 messages: # Can be used to add translation

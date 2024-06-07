@@ -1,11 +1,10 @@
 package me.kruase.tablisttweaks.commands
 
-import org.bukkit.command.CommandSender
-import org.bukkit.ChatColor
 import me.kruase.tablisttweaks.TablistTweaks.Companion.instance
 import me.kruase.tablisttweaks.TablistTweaks.Companion.userConfig
 import me.kruase.tablisttweaks.getUserConfig
 import me.kruase.tablisttweaks.util.*
+import org.bukkit.command.CommandSender
 
 
 fun reload(sender: CommandSender, args: Array<out String>) {
@@ -15,18 +14,9 @@ fun reload(sender: CommandSender, args: Array<out String>) {
 
     userConfig = instance.getUserConfig()
 
-    if (userConfig.enabledFeatures.dimensionColors) {
+    instance.server.onlinePlayers.forEach { it.unsetDimensionColor() }
+    if (userConfig.enabledFeatures.dimensionColors)
         instance.server.onlinePlayers.forEach { it.updateDimension(isInitial = true) }
-    } else {
-        instance.server.onlinePlayers.forEach {
-            it.playerListName.run {
-                val dropStart = if (startsWith(ChatColor.COLOR_CHAR)) 2 else 0
-                val dropEnd = if (endsWith(ChatColor.RESET.toString())) 2 else 0
-
-                it.setPlayerListName(drop(dropStart).dropLast(dropEnd))
-            }
-        }
-    }
 
     if (userConfig.enabledFeatures.idleTracking) {
         instance.server.onlinePlayers.forEach {
@@ -36,8 +26,22 @@ fun reload(sender: CommandSender, args: Array<out String>) {
     } else  {
         instance.server.onlinePlayers.forEach {
             it.stopIdleTracking()
-            it.setPlayerListName(it.playerListName.replace(idleBadge, ""))
+            it.removeIdleBadge()
         }
+    }
+
+    instance.server.onlinePlayers.forEach { player ->
+        player.unsetDimensionColor()
+
+        if (userConfig.enabledFeatures.dimensionColors)
+            player.updateDimension(isInitial = true)
+
+        player.stopIdleTracking()
+
+        if (userConfig.enabledFeatures.idleTracking)
+            player.startIdleTracking()
+        else
+            player.removeIdleBadge()
     }
 }
 

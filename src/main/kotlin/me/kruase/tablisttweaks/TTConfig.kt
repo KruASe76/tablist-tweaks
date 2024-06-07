@@ -55,7 +55,7 @@ fun TablistTweaks.newDefaultConfig() {
 
 data class EnabledFeaturesConfig(private val config: FileConfiguration) {
     val dimensionColors = config.getBoolean("features.dimension-colors")
-    val dimensionColorsPreserveSuffix = config.getBoolean("features.dimension-colors-preserve-suffix")
+    val dimensionColorDots = config.getBoolean("features.dimension-color-dots")
     val idleTracking = config.getBoolean("features.idle-badge")
 }
 
