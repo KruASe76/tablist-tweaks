@@ -10,8 +10,9 @@
 A Spigot (Bukkit) Minecraft that improves the player list (shown on Tab button press)
 
 
-
-![](https://cdn.modrinth.com/data/MDSeFHTz/images/d9c0e5e978036931665b3d4dcb894899764e4465.png)
+| Default  | Dimension Dots |
+|----------|----------------|
+| ![](https://cdn.modrinth.com/data/MDSeFHTz/images/d9c0e5e978036931665b3d4dcb894899764e4465.png) | ![](https://cdn.modrinth.com/data/MDSeFHTz/images/29d827ef25d4b87c282dab696cd6c2f19374f313.png) |
 
 
 ## Features (can be disabled through configuration)
@@ -45,6 +46,7 @@ As for other similar plugins - most likely not.
 - The time player has to stand still to get the "idle" badge (in seconds)
 - Enable/disable features
   - Dimension colors
+    - Dot format (see images)
   - Idle badge
 - Plugin messages
   - error
