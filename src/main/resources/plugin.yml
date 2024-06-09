@@ -3,12 +3,12 @@ version: '${project.version}'
 api-version: '${mcApi.version}'
 main: me.kruase.tablisttweaks.TablistTweaks
 softdepend:
-    - TAB
+    - PlaceholderAPI
 authors: [ KruASe ]
 
-# folia-supported: true  # maybe sometime in the future...
+# folia-supported: true # maybe sometime in the future...
 
-description: Colors the player's name depending on the dimension they are in and indicates whether they are idle
+description: Small improvements for Tab player list - inspired by MineShield
 
 commands:
     tablisttweaks:

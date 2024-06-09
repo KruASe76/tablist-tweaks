@@ -22,11 +22,19 @@ A Spigot (Bukkit) Minecraft that improves the player list (shown on Tab button p
   - ![](https://via.placeholder.com/15/ff5555/ff5555.png) Red for Nether
   - ![](https://via.placeholder.com/15/ff55ff/ff55ff.png) Purple for The End
 - The "idle" badge is placed after the player's name if they haven't moved for some time
+- [Placeholders](#compatibility)
 
 
 ## Compatibility
-**Tablist tweaks is compatible with [TAB](https://modrinth.com/plugin/tab-was-taken)!**  
-As for other similar plugins - most likely not.
+### [PlaceholderAPI](https://www.spigotmc.org/resources/placeholderapi.6245/) placeholders
+(they can be used in other plugins such as [TAB](https://modrinth.com/plugin/tab-was-taken))
+
+| Placeholder                       | Description                                                                                    |
+|-----------------------------------|------------------------------------------------------------------------------------------------|
+| `%tablisttweaks_dimension_color%` | corresponding color code from config<br/>(obviously can be used to color anything)             |
+| `%tablisttweaks_dimension_dot%`   | Dimension Dot with corresponding color<br/>(even if the "dimension-dots" feature is disabled)  |
+| `%tablisttweaks_idle_badge%`      | empty or the "idle" badge with color from config<br/>(always empty if the feature is disabled) |
+| `%tablisttweaks_idle_flag%`       | either `true` or `false`<br/>(always `false` if the feature is disabled)                       |
 
 
 ## Usage
@@ -46,13 +54,15 @@ As for other similar plugins - most likely not.
 - The time player has to stand still to get the "idle" badge (in seconds)
 - Enable/disable features
   - Dimension colors
-    - Dot format (see images)
-  - Idle badge
+    - Dimension Dot format (see images)
+  - "Idle" badge
+- Colors
+  - dimensions
+  - "idle" badge
 - Plugin messages
   - error
   - help
   - warning
-  - info
 
 
 ## Permissions

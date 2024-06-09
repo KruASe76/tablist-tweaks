@@ -6,7 +6,7 @@
 
     <groupId>me.kruase</groupId>
     <artifactId>tablist-tweaks</artifactId>
-    <version>1.5</version>
+    <version>1.6</version>
     <packaging>jar</packaging>
 
     <name>TablistTweaks</name>
@@ -73,8 +73,8 @@
             <url>https://oss.sonatype.org/content/groups/public/</url>
         </repository>
         <repository>
-            <id>krypton</id>
-            <url>https://repo.kryptonmc.org/releases</url>
+            <id>placeholderapi</id>
+            <url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
         </repository>
     </repositories>
 
@@ -91,9 +91,9 @@
             <version>${kotlin.version}</version>
         </dependency>
         <dependency>
-            <groupId>me.neznamy</groupId>
-            <artifactId>tab-api</artifactId>
-            <version>4.0.2</version>
+            <groupId>me.clip</groupId>
+            <artifactId>placeholderapi</artifactId>
+            <version>2.11.6</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

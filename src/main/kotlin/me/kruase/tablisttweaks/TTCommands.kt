@@ -1,6 +1,8 @@
 package me.kruase.tablisttweaks
 
-import me.kruase.tablisttweaks.commands.*
+import me.kruase.tablisttweaks.TablistTweaks.Companion.userConfig
+import me.kruase.tablisttweaks.commands.help
+import me.kruase.tablisttweaks.commands.reload
 import org.bukkit.ChatColor
 import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
@@ -16,11 +18,11 @@ class TTCommands : TabExecutor {
     ): List<String> {
         val fullArgs = args.dropLast(1)
         return when (fullArgs.getOrNull(0)) {
-            null -> TablistTweaks.userConfig.messages.help.keys
+            null -> userConfig.messages.help.keys
                 .filter { sender.hasPermission("tablisttweaks.${it.replace("-", ".")}") } - "header"
             "help" -> when {
                 sender.hasPermission("tablisttweaks.help") -> when (fullArgs.getOrNull(1)) {
-                    null -> TablistTweaks.userConfig.messages.help.keys
+                    null -> userConfig.messages.help.keys
                         .filter { sender.hasPermission("tablisttweaks.${it.replace("-", ".")}") } - "header"
                     else -> listOf()
                 }
@@ -39,12 +41,12 @@ class TTCommands : TabExecutor {
             }
         } catch (e: UnsupportedOperationException) {
             sender.sendMessage(
-                "${ChatColor.RED}${TablistTweaks.userConfig.messages.error["no-permission"] ?: "Error: no-permission"}"
+                "${ChatColor.RED}${userConfig.messages.error["no-permission"] ?: "Error: no-permission"}"
             )
         } catch (e: IllegalArgumentException) {
             sender.sendMessage(
                 "${ChatColor.RED}${
-                    TablistTweaks.userConfig.messages.error["invalid-command"] ?: "Error: invalid-command"
+                    userConfig.messages.error["invalid-command"] ?: "Error: invalid-command"
                 }"
             )
         } catch (e: IllegalStateException) {

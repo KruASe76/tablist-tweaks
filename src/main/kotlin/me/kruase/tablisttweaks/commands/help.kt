@@ -1,8 +1,8 @@
 package me.kruase.tablisttweaks.commands
 
-import org.bukkit.command.CommandSender
 import me.kruase.tablisttweaks.TablistTweaks.Companion.userConfig
 import me.kruase.tablisttweaks.util.hasPluginPermission
+import org.bukkit.command.CommandSender
 
 
 fun help(sender: CommandSender, args: Array<out String>) {

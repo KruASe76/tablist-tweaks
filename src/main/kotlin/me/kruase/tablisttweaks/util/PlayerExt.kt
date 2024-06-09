@@ -1,36 +1,55 @@
 package me.kruase.tablisttweaks.util
 
-import me.kruase.tablisttweaks.TablistTweaks.Companion.idlePlayerTaskIds
 import me.kruase.tablisttweaks.TablistTweaks.Companion.instance
-import me.kruase.tablisttweaks.TablistTweaks.Companion.tabApiInstance
+import me.kruase.tablisttweaks.TablistTweaks.Companion.playerIdleTaskIds
+import me.kruase.tablisttweaks.TablistTweaks.Companion.playerPlaceholders
 import me.kruase.tablisttweaks.TablistTweaks.Companion.userConfig
 import org.bukkit.ChatColor
 import org.bukkit.Location
-import org.bukkit.World
+import org.bukkit.World.Environment
 import org.bukkit.entity.Player
 
 
-const val dimensionDot = " ⏺"
-val idleBadge = "${ChatColor.GOLD} ⌚${ChatColor.RESET}"
+const val dimensionDot = "⏺"
+const val idleBadge = "⌚"
+
+
+fun Player.initFeatures() {
+    placeholders = PlayerPlaceholders()
+
+    if (userConfig.enabledFeatures.dimensionColors)
+        updateDimension(isInitial = true)
+
+    if (userConfig.enabledFeatures.idleTracking)
+        startIdleTracking()
+}
+
+fun Player.disableFeatures() {
+    stopIdleTracking()
+    removeIdleBadge()
+    unsetDimensionColor()
+}
 
 
 var Player.idleTaskId: Int?
-    get() = idlePlayerTaskIds[uniqueId]
+    get() = playerIdleTaskIds[uniqueId]
     set(value) {
-        idlePlayerTaskIds[uniqueId] = value!!
+        if (value == null)
+            playerIdleTaskIds.remove(uniqueId)
+        else
+            playerIdleTaskIds[uniqueId] = value
     }
-
-fun Player.deleteIdleTaskId() {
-    idlePlayerTaskIds.remove(uniqueId)
-}
 
 
 fun Player.updateDimension(destinationLocation: Location = location, isInitial: Boolean = false) {
     val color = when (destinationLocation.world!!.environment) {
-        World.Environment.NORMAL -> ChatColor.GREEN
-        World.Environment.NETHER -> ChatColor.RED
-        World.Environment.THE_END -> ChatColor.LIGHT_PURPLE
+        Environment.NORMAL -> userConfig.colors.overworld
+        Environment.NETHER -> userConfig.colors.nether
+        Environment.THE_END -> userConfig.colors.end
     }
+
+    if (!isInitial)
+        removeIdleBadge()  // ...this is just logical
 
     setDimensionColor(color, isInitial)
 }
@@ -39,14 +58,20 @@ fun Player.updateDimension(destinationLocation: Location = location, isInitial: 
 fun Player.startIdleTracking() {
     idleTaskId = instance.server.scheduler.scheduleSyncDelayedTask(
         instance,
-        { addIdleBadge() },
+        {
+            addIdleBadge()
+
+            placeholders?.idleFlag = "true"
+        },
         userConfig.idleTimeout
     )
 }
 
 fun Player.stopIdleTracking() {
     tryCancelIdleTask()
-    deleteIdleTaskId()
+    idleTaskId = null
+
+    placeholders?.idleFlag = "false"
 }
 
 fun Player.refreshIdleTracking() {
@@ -55,6 +80,8 @@ fun Player.refreshIdleTracking() {
     removeIdleBadge()
 
     startIdleTracking()
+
+    placeholders?.idleFlag = "false"
 }
 
 fun Player.tryCancelIdleTask() {
@@ -69,145 +96,90 @@ fun Player.tryCancelIdleTask() {
 
 // when getting originalName, removing suffix ChatColor.RESET only if present
 // (it seems like Paper automatically removes ChatColor.RESET at the end of the playerListName)
-fun Player.setDimensionColor(color: ChatColor, isInitial: Boolean) {
-    if (tabApiInstance == null) {
-        if (userConfig.enabledFeatures.dimensionColorDots) {
-            val originalName =
-                playerListName
-                    .removeSuffix(ChatColor.RESET.toString())
-                    .let {
-                        if (isInitial) it
-                        else it
-                            .removeSuffix(dimensionDot)
-                            .dropLast(2)
-                        // removing the dot and preceding color code
-                    }
+fun Player.setDimensionColor(color: String, isInitial: Boolean) {
+    if (!isInitial)
+        unsetDimensionColor()
 
-            setPlayerListName("$originalName$color$dimensionDot${ChatColor.RESET}")
-        } else {
-            val originalName =
-                playerListName
-                    .removeSuffix(ChatColor.RESET.toString())
-                    .let {
-                        if (isInitial) it
-                        else it.drop(2)
-                        // dropping only first color code
-                    }
+    val originalName = playerListName.removeSuffix(ChatColor.RESET.toString())
 
-            setPlayerListName("$color$originalName${ChatColor.RESET}")
-        }
-    } else {
-        tabApiInstance
-            ?.run {
-                val tabPlayer = getPlayer(uniqueId) ?: return@run
-                tabListFormatManager
-                    ?.run {
-                        if (userConfig.enabledFeatures.dimensionColorDots) {
-                            setSuffix(
-                                tabPlayer,
-                                "${getOriginalSuffix(tabPlayer)}$color$dimensionDot${ChatColor.RESET}"
-                            )
-                            // always using getOriginalSuffix to override dimension color on every call
-                            // this would reset idleBadge, but... if player changes dimension, they're not AFK, right?
-                        } else {
-                            setName(
-                                tabPlayer,
-                                "$color${getOriginalName(tabPlayer)}${ChatColor.RESET}"
-                            )
-                            // always using getOriginalName to override dimension color on every call
-                            // also the color won't be overridden if getOriginalName is already colored
-                        }
-                    }
-            }
-    }
+    if (userConfig.enabledFeatures.dimensionDots)
+        setPlayerListName("$originalName $color$dimensionDot${ChatColor.RESET}")
+    else
+        setPlayerListName("$color$originalName${ChatColor.RESET}")
+
+    placeholders?.dimensionColor = color
+    placeholders?.dimensionDot = "$color$dimensionDot${ChatColor.RESET}"
 }
 
 fun Player.unsetDimensionColor() {
-    if (tabApiInstance == null) {
-        setPlayerListName(
-            playerListName
-                .removeSuffix(ChatColor.RESET.toString())
-                .let { name ->
-                    if (dimensionDot in name) {
-                        name.indexOf(dimensionDot)
-                            .let { index ->
-                                name.take(index - 2) + name.drop(index + dimensionDot.length)
-                                // removing dimensionDot and preceding color code
-                                // (possibly leaving a ChatColor.RESET... but it makes no difference)
-                            }
-                    }
-                    else if (name.startsWith(ChatColor.COLOR_CHAR))
-                        name.drop(2)
-                    else
-                        name
+    setPlayerListName(
+        playerListName
+            .removeSuffix(ChatColor.RESET.toString())
+            .let { name ->
+                if (dimensionDot in name) {
+                    name
+                        .removeSuffix(dimensionDot)
+                        .removeSuffix(userConfig.colors.overworld)
+                        .removeSuffix(userConfig.colors.nether)
+                        .removeSuffix(userConfig.colors.end)
+                        .removeSuffix(" ")
+                    // removing dimensionDot and preceding color code
                 }
-        )
-    } else {
-        tabApiInstance
-            ?.run {
-                val tabPlayer = getPlayer(uniqueId) ?: return@run
-                tabListFormatManager
-                    ?.run {
-                        setName(tabPlayer, getOriginalName(tabPlayer))
-                        setSuffix(
-                            tabPlayer,
-                            getCustomSuffix(tabPlayer)
-                                ?.removeSuffix(ChatColor.RESET.toString())
-                                ?.let { suffix ->
-                                    if (dimensionDot in suffix)
-                                        suffix.indexOf(dimensionDot)
-                                            .let { index ->
-                                                suffix.take(index - 2) + suffix.drop(index + dimensionDot.length)
-                                                // removing dimensionDot and preceding color code
-                                                // (possibly leaving a ChatColor.RESET... but it makes no difference)
-                                            }
-                                    else
-                                        suffix
-                                }
-                        )
-                    }
+                else if (name.startsWith(ChatColor.COLOR_CHAR))
+                    name
+                        .removePrefix(userConfig.colors.overworld)
+                        .removePrefix(userConfig.colors.nether)
+                        .removePrefix(userConfig.colors.end)
+                    // dropping first color code
+                else
+                    name
             }
-    }
+            .ensureFinalColorReset()
+    )
 }
 
 fun Player.addIdleBadge() {
-    if (tabApiInstance == null) {
-        setPlayerListName(playerListName + idleBadge)
-    } else {
-        tabApiInstance
-            ?.run {
-                val tabPlayer = getPlayer(uniqueId) ?: return@run
-                tabListFormatManager
-                    ?.run {
-                        setSuffix(
-                            tabPlayer,
-                            (getCustomSuffix(tabPlayer) ?: getOriginalSuffix(tabPlayer)) + idleBadge
-                        )
-                    }
-            }
-    }
+    setPlayerListName("$playerListName ${userConfig.colors.idleBadge}$idleBadge${ChatColor.RESET}")
+
+    placeholders?.idleBadge = "${userConfig.colors.idleBadge}$idleBadge${ChatColor.RESET}"
 }
 
 fun Player.removeIdleBadge() {
-    if (tabApiInstance == null) {
-        setPlayerListName(
-            playerListName
-                .removeSuffix(idleBadge)
-                .removeSuffix(idleBadge.removeSuffix(ChatColor.RESET.toString()))  // for Paper again
-        )
-    } else {
-        tabApiInstance
-            ?.run {
-                val tabPlayer = getPlayer(uniqueId) ?: return@run
-                tabListFormatManager
-                    ?.run {
-                        setSuffix(
-                            tabPlayer,
-                            getCustomSuffix(tabPlayer)
-                                ?.removeSuffix(idleBadge)
-                                ?.removeSuffix(idleBadge.removeSuffix(ChatColor.RESET.toString()))  // for Paper again
-                        )
-                    }
-            }
-    }
+    setPlayerListName(
+        playerListName
+            .removeSuffix(ChatColor.RESET.toString())
+            .removeSuffix(idleBadge)
+            .removeSuffix(userConfig.colors.idleBadge)
+            .removeSuffix(" ")
+            .ensureFinalColorReset()
+    )
+
+    placeholders?.idleBadge = ""
 }
+
+
+fun String.ensureFinalColorReset(): String {
+    return (
+        if (!endsWith(ChatColor.RESET.toString()))
+            this + ChatColor.RESET
+        else
+            this
+    )
+}
+
+
+data class PlayerPlaceholders(
+    var dimensionColor: String = "",
+    var dimensionDot: String = "",
+    var idleBadge: String = "",
+    var idleFlag: String = "false",
+)
+
+var Player.placeholders: PlayerPlaceholders?
+    get() = playerPlaceholders[uniqueId]
+    set(value) {
+        if (value == null)
+            playerPlaceholders.remove(uniqueId)
+        else
+            playerPlaceholders[uniqueId] = value
+    }

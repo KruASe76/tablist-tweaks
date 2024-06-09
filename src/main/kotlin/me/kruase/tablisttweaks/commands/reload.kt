@@ -12,37 +12,11 @@ fun reload(sender: CommandSender, args: Array<out String>) {
 
     if (args.isNotEmpty()) throw IllegalArgumentException()
 
+    instance.server.onlinePlayers.forEach { it.disableFeatures() }
+
     userConfig = instance.getUserConfig()
 
-    instance.server.onlinePlayers.forEach { it.unsetDimensionColor() }
-    if (userConfig.enabledFeatures.dimensionColors)
-        instance.server.onlinePlayers.forEach { it.updateDimension(isInitial = true) }
-
-    if (userConfig.enabledFeatures.idleTracking) {
-        instance.server.onlinePlayers.forEach {
-            it.stopIdleTracking()
-            it.startIdleTracking()
-        }
-    } else  {
-        instance.server.onlinePlayers.forEach {
-            it.stopIdleTracking()
-            it.removeIdleBadge()
-        }
-    }
-
-    instance.server.onlinePlayers.forEach { player ->
-        player.unsetDimensionColor()
-
-        if (userConfig.enabledFeatures.dimensionColors)
-            player.updateDimension(isInitial = true)
-
-        player.stopIdleTracking()
-
-        if (userConfig.enabledFeatures.idleTracking)
-            player.startIdleTracking()
-        else
-            player.removeIdleBadge()
-    }
+    instance.server.onlinePlayers.forEach { it.initFeatures() }
 }
 
 

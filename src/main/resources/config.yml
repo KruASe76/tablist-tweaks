@@ -3,9 +3,15 @@ idle-badge-timeout-seconds: 300
 features: # "true" - ON, "false" - OFF
     dimension-colors: true
     # display player's dimension as a colored dot name suffix:
-    dimension-color-dots: false
+    dimension-dots: false
 
     idle-badge: true
+
+colors: # These are "Chat Codes" from https://www.digminecraft.com/lists/color_list_pc.php
+    overworld: §a
+    nether: §c
+    end: §d
+    idle-badge: §6
 
 messages: # Can be used to add translation
     error:
@@ -16,9 +22,6 @@ messages: # Can be used to add translation
         header: §7-------- §6[§aTablistTweaks§6] §7---------------------
         help: §a/tt §6help §a[command] §r- Show help for given command, for available commands otherwise
         reload: §a/tt §6reload §r- Reload config
-
-    info: # Shown only in console; to turn off certain messages leave the field empty (not empty quotes!)
-        tab-found: TAB found! Using its API...
 
     warning: # Shown only in console; to turn off certain messages leave the field empty (not empty quotes!)
         improper-tracking: Player {player} was not idle-tracked properly before
