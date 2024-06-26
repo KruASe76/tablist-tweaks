@@ -71,19 +71,24 @@ data class ColorsConfig(private val config: FileConfiguration) {
 }
 
 data class MessagesConfig(private val config: FileConfiguration) {
-    val help: Map<String, String?> =
+    val info: Map<String, String?> =
         config
-            .getConfigurationSection("messages.help")!!
+            .getConfigurationSection("messages.info")!!
             .getKeys(false)
-            .associateWith { config.getString("messages.help.$it") }
-    val error: Map<String, String?> =
-        config
-            .getConfigurationSection("messages.error")!!
-            .getKeys(false)
-            .associateWith { config.getString("messages.error.$it") }
+            .associateWith { config.getString("messages.info.$it") }
     val warning: Map<String, String?> =
         config
             .getConfigurationSection("messages.warning")!!
             .getKeys(false)
             .associateWith { config.getString("messages.warning.$it") }
+    val error: Map<String, String?> =
+        config
+            .getConfigurationSection("messages.error")!!
+            .getKeys(false)
+            .associateWith { config.getString("messages.error.$it") }
+    val help: Map<String, String?> =
+        config
+            .getConfigurationSection("messages.help")!!
+            .getKeys(false)
+            .associateWith { config.getString("messages.help.$it") }
 }

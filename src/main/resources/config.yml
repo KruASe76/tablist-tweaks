@@ -14,6 +14,12 @@ colors: # These are "Chat Codes" from https://www.digminecraft.com/lists/color_l
     idle-badge: §6
 
 messages: # Can be used to add translation
+    info: # To turn off certain messages leave the field empty (not empty quotes!)
+        config-loaded: Config loaded!
+
+    warning: # Shown only in console; to turn off certain messages leave the field empty (not empty quotes!)
+        improper-tracking: Player {player} was not idle-tracked properly before
+
     error:
         no-permission: Not enough permissions to call this command!
         invalid-command: Invalid command!
@@ -22,6 +28,3 @@ messages: # Can be used to add translation
         header: §7-------- §6[§aTablistTweaks§6] §7---------------------
         help: §a/tt §6help §a[command] §r- Show help for given command, for available commands otherwise
         reload: §a/tt §6reload §r- Reload config
-
-    warning: # Shown only in console; to turn off certain messages leave the field empty (not empty quotes!)
-        improper-tracking: Player {player} was not idle-tracked properly before
