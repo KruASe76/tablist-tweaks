@@ -11,6 +11,16 @@ colors: # These are "Chat Codes" from https://www.digminecraft.com/lists/color_l
     overworld: §a
     nether: §c
     end: §d
+
+    # mapping: name -> color
+    # "default" key is fallback color, don't remove it
+    # name means the dimension name, the part that comes after "mod_name:"
+    # you can get those names trying to type command: "/execute in" and press TAB button
+    # example for mod "Dimensional Dungeons":
+    # dimension id is "dimdungeons:dungeon_dimension", so name is "dungeon_dimension"
+    custom-dimensions:
+        default: §f
+
     idle-badge: §6
 
 messages: # Can be used to add translation

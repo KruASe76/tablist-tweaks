@@ -21,6 +21,7 @@ A Spigot (Bukkit) Minecraft that improves the player list (shown on Tab button p
   - ![](https://via.placeholder.com/15/55ff55/55ff55.png) Green for Overworld
   - ![](https://via.placeholder.com/15/ff5555/ff5555.png) Red for Nether
   - ![](https://via.placeholder.com/15/ff55ff/ff55ff.png) Purple for The End
+  - Custom dimensions (from datapacks and mods) are supported!
 - The "idle" badge is placed after the player's name if they haven't moved for some time
 - [Placeholders](#compatibility)
 
@@ -53,11 +54,12 @@ A Spigot (Bukkit) Minecraft that improves the player list (shown on Tab button p
 
 - The time player has to stand still to get the "idle" badge (in seconds)
 - Enable/disable features
-  - Dimension colors
-    - Dimension Dot format (see images)
-  - "Idle" badge
+  - dimension colors
+    - "dimension dot" format (see images)
+  - "idle" badge
 - Colors
-  - dimensions
+  - default dimensions
+  - custom dimensions
   - "idle" badge
 - Plugin messages
   - error

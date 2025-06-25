@@ -67,6 +67,15 @@ data class ColorsConfig(private val config: FileConfiguration) {
     val overworld = config.getString("colors.overworld")!!
     val nether = config.getString("colors.nether")!!
     val end = config.getString("colors.end")!!
+
+    val customDefault = config.getString("colors.custom-dimensions.default")!!
+    val customNameMap: Map<String, String> =
+        config
+            .getConfigurationSection("colors.custom-dimensions")!!
+            .getKeys(false)
+            .filter { key -> key != "default" }
+            .associateWith { config.getString("colors.custom-dimensions.$it")!! }
+
     val idleBadge = config.getString("colors.idle-badge")!!
 }
 

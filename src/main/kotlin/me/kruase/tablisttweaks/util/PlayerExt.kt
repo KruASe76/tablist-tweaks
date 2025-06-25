@@ -42,10 +42,12 @@ var Player.idleTaskId: Int?
 
 
 fun Player.updateDimension(destinationLocation: Location = location, isInitial: Boolean = false) {
+    @Suppress("REDUNDANT_ELSE_IN_WHEN")
     val color = when (destinationLocation.world!!.environment) {
         Environment.NORMAL -> userConfig.colors.overworld
         Environment.NETHER -> userConfig.colors.nether
         Environment.THE_END -> userConfig.colors.end
+        else -> userConfig.colors.customNameMap[destinationLocation.world!!.name] ?: userConfig.colors.customDefault
     }
 
     if (!isInitial)
