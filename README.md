@@ -18,9 +18,9 @@ A Spigot (Bukkit) Minecraft that improves the player list (shown on Tab button p
 ## Features (can be disabled through configuration)
 
 - The color of the player's name is associated with the dimension in which they are located:
-  - ![](https://via.placeholder.com/15/55ff55/55ff55.png) Green for Overworld
-  - ![](https://via.placeholder.com/15/ff5555/ff5555.png) Red for Nether
-  - ![](https://via.placeholder.com/15/ff55ff/ff55ff.png) Purple for The End
+  - ![](https://dummyimage.com/15/55ff55/55ff55) Green for Overworld
+  - ![](https://dummyimage.com/15/ff5555/ff5555) Red for Nether
+  - ![](https://dummyimage.com/15/ff55ff/ff55ff) Purple for The End
   - Custom dimensions (from datapacks and mods) are supported!
 - The "idle" badge is placed after the player's name if they haven't moved for some time
 - [Placeholders](#compatibility)
