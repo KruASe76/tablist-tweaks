@@ -1,5 +1,6 @@
 package me.kruase.tablisttweaks.util
 
+import me.kruase.tablisttweaks.TablistTweaks
 import me.kruase.tablisttweaks.TablistTweaks.Companion.instance
 import me.kruase.tablisttweaks.TablistTweaks.Companion.playerIdleTaskIds
 import me.kruase.tablisttweaks.TablistTweaks.Companion.playerPlaceholders
@@ -8,6 +9,12 @@ import org.bukkit.ChatColor
 import org.bukkit.Location
 import org.bukkit.World.Environment
 import org.bukkit.entity.Player
+import org.bukkit.Bukkit
+import org.bukkit.event.EventHandler
+import org.bukkit.event.Listener
+import org.bukkit.event.entity.EntityDamageEvent
+import org.bukkit.event.player.PlayerJoinEvent
+import kotlin.math.ceil
 
 
 const val dimensionDot = "⏺"
@@ -22,6 +29,8 @@ fun Player.initFeatures() {
 
     if (userConfig.enabledFeatures.idleTracking)
         startIdleTracking()
+
+    updateTablistNameWithStats()
 }
 
 fun Player.disableFeatures() {
@@ -185,3 +194,42 @@ var Player.placeholders: PlayerPlaceholders?
         else
             playerPlaceholders[uniqueId] = value
     }
+
+
+/**
+ * Updates the player's tablist name to include numeric health and ping if enabled in config.
+ * This should be called on join, health change, and periodically for ping.
+ */
+fun Player.updateTablistNameWithStats() {
+    val healthEnabled = userConfig.enabledFeatures.showNumericHealth
+    val pingEnabled = userConfig.enabledFeatures.showNumericPing
+
+    val baseName = name
+    val heartIcon = "❤" // Unicode red heart
+    val health = if (healthEnabled) " §c${ceil(health).toInt()}$heartIcon" else ""
+    val ping = if (pingEnabled) " §7(${getPing()}ms)" else ""
+
+    // Remove previous health/ping info if present (matches both HP and heart icon)
+    val current = playerListName
+        .replace(Regex(" §c\\d+HP"), "")
+        .replace(Regex(" §c\\d+❤"), "")
+        .replace(Regex(" §7\\(\\d+ms\\)"), "")
+
+    setPlayerListName("$current$health$ping".ensureFinalColorReset())
+}
+
+/**
+ * Utility to get player ping in a version-independent way.
+ */
+fun Player.getPing(): Int {
+    return try {
+        val method = this.javaClass.getMethod("getPing")
+        method.invoke(this) as? Int ?: 0
+    } catch (e: Exception) {
+        0
+    }
+}
+
+// Optionally, you may want to update the tablist name on health change and periodically for ping.
+// For health, you can listen to EntityDamageEvent and PlayerJoinEvent in a listener.
+// For ping, you can schedule a repeating task elsewhere in your plugin to call updateTablistNameWithStats() for all players.

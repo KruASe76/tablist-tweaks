@@ -2,6 +2,7 @@ package me.kruase.tablisttweaks
 
 import me.kruase.tablisttweaks.commands.reload
 import me.kruase.tablisttweaks.util.PlayerPlaceholders
+import me.kruase.tablisttweaks.util.updateTablistNameWithStats
 import net.md_5.bungee.api.ChatColor
 import org.bukkit.entity.Player
 import org.bukkit.plugin.java.JavaPlugin
@@ -38,5 +39,12 @@ class TablistTweaks : JavaPlugin() {
         getCommand("tablisttweaks")!!.setExecutor(TTCommands())
 
         server.pluginManager.registerEvents(TTEvents(), instance)
+
+        // Schedule repeating task to update ping in tablist if enabled
+        server.scheduler.runTaskTimer(this, Runnable {
+            if (userConfig.enabledFeatures.showNumericPing) {
+                server.onlinePlayers.forEach { it.updateTablistNameWithStats() }
+            }
+        }, 20L, 40L) // every 2 seconds
     }
 }

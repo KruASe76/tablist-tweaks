@@ -61,6 +61,8 @@ data class EnabledFeaturesConfig(private val config: FileConfiguration) {
     val dimensionColors = config.getBoolean("features.dimension-colors")
     val dimensionDots = config.getBoolean("features.dimension-dots")
     val idleTracking = config.getBoolean("features.idle-badge")
+    val showNumericHealth = config.getBoolean("features.show-numeric-health")
+    val showNumericPing = config.getBoolean("features.show-numeric-ping")
 }
 
 data class ColorsConfig(private val config: FileConfiguration) {
