@@ -7,6 +7,9 @@ features: # "true" - ON, "false" - OFF
 
     idle-badge: true
 
+    show-numeric-health: true
+    show-numeric-ping: true
+
 colors: # These are "Chat Codes" from https://www.digminecraft.com/lists/color_list_pc.php
     overworld: §a
     nether: §c
